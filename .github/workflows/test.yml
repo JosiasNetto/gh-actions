@@ -1,0 +1,24 @@
+name: Test Project
+
+# Simulation of a workflow, that tests the project, when the user push a commit
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      # Get the code of the repository, to the runner machine
+      - name: Get Code
+        # uses: When using an action, not a direct shell command
+        uses: actions/checkout@v3
+        
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
